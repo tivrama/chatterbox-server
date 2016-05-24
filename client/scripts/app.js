@@ -121,7 +121,7 @@
 ///////////////////////////////////////////////////////////////////////
 var app = {
 
-  server: 'http://127.0.0.1:3000/classes/messages/',
+  server: 'http://127.0.0.1:3000',
 
   init: function() {
     console.log('running chatterbox');
@@ -135,7 +135,7 @@ var app = {
     app.$text = $('#message');
 
     app.loadMsgs();
-    // setInterval(app.loadMsgs.bind(app),1000);
+    //setInterval(app.loadMsgs.bind(app),1000);
 
     $('#send').on('submit', app.handleSubmit);
   },
@@ -160,6 +160,8 @@ var app = {
   },
 
   displayMessage: function(message) {
+    console.log('display', message);
+    console.log('onscreen', app.onscreenMessages)
     if( !app.onscreenMessages[message.objectId]) {
       var $html = app.renderMessage(message);
       $('#chats').prepend($html);
@@ -179,6 +181,7 @@ var app = {
       data: { order: '-createdAt'},
       contentType: 'application/json',
       success: function(json) {
+        console.log('success load', json);
         app.displayMessages(json.results);
       },
       complete: function() {

@@ -11,6 +11,9 @@ this file and include it in basic-server.js so that it actually works.
 *Hint* Check out the node module documentation at http://nodejs.org/api/modules.html.
 
 **************************************************************/
+//this is where we save messages
+var messages = {results: []};
+var objectId = 0;
 
 var requestHandler = function(request, response) {
   // Request and Response come from node's http module.
@@ -30,7 +33,7 @@ var requestHandler = function(request, response) {
   // Do some basic logging
   console.log('----------------------------------------------------------')
   // console.log('request: ', request);
-  console.log('response: ', response);
+  //console.log('response: ', response);
   // Adding more logging to your server can be an easy way to get passive
   // debugging help, but you should always be careful about leaving stray
   // console.logs in your code.
@@ -50,20 +53,60 @@ var requestHandler = function(request, response) {
 
   // .writeHead() writes to the request line and headers of the response,
   // which includes the status and all headers.
-  response.writeHead(statusCode, headers);
+  console.log('path', request.path)
 
-  //Recieving a Post Request
-  request.on('request', function(){
-     var body = [];
-    console.log('request acknowledged');
-    this.on('data', function(chunk) {
-      console.log('chunk', chunk);
-    body.push(chunk);
+  //this will check the method of the request
+  if (request.method === 'GET' || request.method === 'OPTIONS') {
+    //check if path is valid  -> do we need a 404
+    //console.log('GETrequest' , request);
+    if (request.url === '/arglebargle') {
+      statusCode = 404;
+      response.writeHead(statusCode, headers);
+      response.end('not found');
+    }
+    response.writeHead(statusCode, headers);
+    //this is the section for GET
+    //send response
+    console.log('messages', messages);
+    response.end(JSON.stringify(messages));
+  } else {
+    //the request is a POST
+    console.log('this is a POST', request.method);
+    //Recieving a Post Request
+    statusCodePOST = 201;
+    var body = [];
+    response.writeHead(statusCodePOST, headers);
+      request.on('data', function(chunk) {
+        console.log('chunk', chunk);
+        body.push(chunk);
       }).on('end', function() {
         body = Buffer.concat(body).toString();
+        body = JSON.parse(body);
+        body.objectId = objectId;
+        console.log('body: ', body);
+        messages.results.push(body);
+        console.log('json messages', messages);
+        //console.log('json messages.results', JSON.parse(messages.results));
+
+        // messages.results = JSON.parse(messages.results[0]);
+        
+        response.end(JSON.stringify(messages));
       });
-    console.log('body: ', body);
-  });
+
+  }
+
+  // //Recieving a Post Request
+  // request.on('request', function(){
+  //    var body = [];
+  //   console.log('request acknowledged');
+  //   this.on('data', function(chunk) {
+  //     console.log('chunk', chunk);
+  //   body.push(chunk);
+  //     }).on('end', function() {
+  //       body = Buffer.concat(body).toString();
+  //     });
+  //   console.log('body: ', body);
+  // });
   
  
 
