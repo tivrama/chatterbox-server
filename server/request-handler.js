@@ -22,8 +22,15 @@ var requestHandler = function(request, response) {
   // Documentation for both request and response can be found in the HTTP section at
   // http://nodejs.org/documentation/api/
 
-  // Do some basic logging.
-  //
+  //what is the method (GET, POST)
+  //we can make a function for POST
+  //async 
+
+
+  // Do some basic logging
+  console.log('----------------------------------------------------------')
+  // console.log('request: ', request);
+  console.log('response: ', response);
   // Adding more logging to your server can be an easy way to get passive
   // debugging help, but you should always be careful about leaving stray
   // console.logs in your code.
@@ -45,14 +52,31 @@ var requestHandler = function(request, response) {
   // which includes the status and all headers.
   response.writeHead(statusCode, headers);
 
-  var body = [];
-  request.on('error', function(error) {
-    console.error(error);
-  }).on('data', function(chunk) {
+  //Recieving a Post Request
+  request.on('request', function(){
+     var body = [];
+    console.log('request acknowledged');
+    this.on('data', function(chunk) {
+      console.log('chunk', chunk);
     body.push(chunk);
-  }).on('end', function() {
-    body = Buffer.concat(body).toString();
+      }).on('end', function() {
+        body = Buffer.concat(body).toString();
+      });
+    console.log('body: ', body);
   });
+  
+ 
+
+  
+
+  // var body = [];
+  // request.on('error', function(error) {
+  //   console.error(error);
+  // }).on('data', function(chunk) {
+  //   body.push(chunk);
+  // }).on('end', function() {
+  //   body = Buffer.concat(body).toString();
+  // });
 
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
