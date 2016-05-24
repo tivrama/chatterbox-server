@@ -121,7 +121,7 @@
 ///////////////////////////////////////////////////////////////////////
 var app = {
 
-  server: 'https://api.parse.com/1/classes/chatterbox',
+  server: 'http://127.0.0.1:3000/classes/messages/',
 
   init: function() {
     console.log('running chatterbox');
@@ -197,6 +197,9 @@ var app = {
       success: function(json) {
         message.objectId = json.objectId;
         app.displayMessage(message)
+      },
+      error: function(json) {
+        console.error('error', json);
       },
       complete: function() {
         app.stopSpinner();

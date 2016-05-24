@@ -3,7 +3,7 @@
 <head>
   <title>Mocha Spec Runner</title>
   <link rel="stylesheet" href="node_modules/mocha/mocha.css">
-  <script src="client/bower_components/jquery.js"></script>
+  <script src="client/bower_components/jquery/jquery.js"></script>
   <script src="node_modules/mocha/mocha.js"></script>
   <script src="node_modules/chai/chai.js"></script>
   <!script src="lib/sinon/sinon.js"></script>
@@ -16,8 +16,8 @@
   </script>
 
   <!-- Spec files -->
-  <script src="spec/LiveServerIntegrationSpec.js"></script>
-  <script src="spec/ServerSpec.js"></script>
+  <script src="server/spec/LiveServerIntegrationSpec.js"></script>
+  <script src="server/spec/ServerSpec.js"></script>
 
   <!-- Source files -->
   <script src="client/scripts/app.js"></script>
@@ -27,7 +27,7 @@
 <div id="mocha"></div>
 <div id="testarea" style="display: none;">
 
-  <div id="main">
+  <!-- <div id="main">
     <h1>chatterbox</h1>
     <div class="spinner"><img src="client/images/spiffygif_46x46.gif"></div>
     <div id="rooms">
@@ -40,7 +40,7 @@
       <input type="submit" name="submit" class="submit"/>
     </form>
     <div id="chats"></div>
-  </div>
+  </div> -->
 
 </div>
 </body>
