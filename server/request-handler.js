@@ -59,17 +59,13 @@ var requestHandler = function(request, response) {
   if (request.method === 'GET' || request.method === 'OPTIONS') {
     //check if path is valid  -> do we need a 404
     //console.log('GETrequest' , request);
-    if (request.url === '/arglebargle') {
-      statusCode = 404;
-      response.writeHead(statusCode, headers);
-      response.end('not found');
-    }
+    
     response.writeHead(statusCode, headers);
     //this is the section for GET
     //send response
     console.log('messages', messages);
     response.end(JSON.stringify(messages));
-  } else {
+  } else if (request.method === 'POST'){
     //the request is a POST
     console.log('this is a POST', request.method);
     //Recieving a Post Request
@@ -94,33 +90,8 @@ var requestHandler = function(request, response) {
       });
 
   }
-
-  // //Recieving a Post Request
-  // request.on('request', function(){
-  //    var body = [];
-  //   console.log('request acknowledged');
-  //   this.on('data', function(chunk) {
-  //     console.log('chunk', chunk);
-  //   body.push(chunk);
-  //     }).on('end', function() {
-  //       body = Buffer.concat(body).toString();
-  //     });
-  //   console.log('body: ', body);
-  // });
   
- 
-
   
-
-  // var body = [];
-  // request.on('error', function(error) {
-  //   console.error(error);
-  // }).on('data', function(chunk) {
-  //   body.push(chunk);
-  // }).on('end', function() {
-  //   body = Buffer.concat(body).toString();
-  // });
-
   // Make sure to always call response.end() - Node may not send
   // anything back to the client until you do. The string you pass to
   // response.end() will be the body of the response - i.e. what shows

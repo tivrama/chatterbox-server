@@ -1,6 +1,7 @@
 /* Import node's http module: */
 var http = require("http");
 var handleRequest = require("./request-handler.js").requestHandler;
+var url = require("url");
 
 
 // Every server needs to listen on a port with a unique number. The
@@ -23,7 +24,19 @@ var ip = "127.0.0.1";
 // incoming requests.
 //
 // After creating the server, we will tell it to listen on the given port and IP. */
-var server = http.createServer(handleRequest);
+var server = http.createServer( function(response, request) {
+
+  //THIS IS FOR ROUTER
+  // if ( url.parse(request.url).pathname === "/classes/messages" ) {
+
+  // handleRequest(response, request);
+  // } else {
+  //   statusCode = 404;
+  //   response.writeHead(statusCode, headers);
+  //   response.end('not found');
+  // }
+  //END ROUTER
+});
 console.log("Listening on http://" + ip + ":" + port);
 // server.on('request', function(){
 //   console.log('request acknowledged')
