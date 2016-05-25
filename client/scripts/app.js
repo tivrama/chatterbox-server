@@ -121,7 +121,7 @@
 ///////////////////////////////////////////////////////////////////////
 var app = {
 
-  server: 'http://127.0.0.1:3000',
+  server: 'http://127.0.0.1:3000/classes/messages',
 
   init: function() {
     console.log('running chatterbox');
@@ -135,7 +135,7 @@ var app = {
     app.$text = $('#message');
 
     app.loadMsgs();
-    //setInterval(app.loadMsgs.bind(app),1000);
+    setInterval(app.loadMsgs.bind(app),1000);
 
     $('#send').on('submit', app.handleSubmit);
   },

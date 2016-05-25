@@ -2,6 +2,7 @@
 var http = require("http");
 var handleRequest = require("./request-handler.js").requestHandler;
 var url = require("url");
+var headers = require("./request-handler.js").headers;
 
 
 // Every server needs to listen on a port with a unique number. The
@@ -22,19 +23,26 @@ var ip = "127.0.0.1";
 //
 // The function we pass to http.createServer will be used to handle all
 // incoming requests.
-//
+var pathList = {
+  '/classes/room1': true,
+  '/classes/messages' : true
+
+};
 // After creating the server, we will tell it to listen on the given port and IP. */
-var server = http.createServer( function(response, request) {
+var server = http.createServer( function(request, response) {
 
   //THIS IS FOR ROUTER
-  // if ( url.parse(request.url).pathname === "/classes/messages" ) {
+  // var path = pathList[url.parse(request.url).pathname];
+  // console.log('path', url.parse(req.url) );
+  console.log('path server request', request.url)
+  if ( pathList[url.parse(request.url).pathname] ) {
 
-  // handleRequest(response, request);
-  // } else {
-  //   statusCode = 404;
-  //   response.writeHead(statusCode, headers);
-  //   response.end('not found');
-  // }
+  handleRequest(request, response);
+  } else {
+    statusCode = 404;
+    response.writeHead(statusCode, headers);
+    response.end('not found');
+  }
   //END ROUTER
 });
 console.log("Listening on http://" + ip + ":" + port);
