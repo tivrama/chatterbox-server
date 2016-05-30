@@ -41,7 +41,7 @@ var server = http.createServer( function(request, response) {
   } else {
     statusCode = 404;
     response.writeHead(statusCode, headers);
-    response.end('not found');
+    response.end('not found', 404);
   }
   //END ROUTER
 });
